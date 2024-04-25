@@ -6,7 +6,7 @@ Dado o código disponibilizado no dia 07/04 e a classe `ListaInvertida`, estas f
 No arquivo **MenuLivros**:
 
 1. Mexi no menu para ter dois modos de busca, por ISBN e por título.
-2. Criei a função `readTexto` dentro de `arqLivros` que retorna um array de livros com os termos procurados.
+2. Chamei uma nova função `readTexto` criada dentro de `arqLivros` que retorna um array de livros com os termos procurados.
 3. Criei a função `mostrarLivros` para imprimir um array de livros.
 
 No arquivo **ArquivoLivros**:
