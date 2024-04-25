@@ -88,6 +88,11 @@ public class ArquivoLivros extends Arquivo<Livro> {
   @Override
   public boolean delete(int id) throws Exception {
     Livro obj = super.read(id);
+    String titulo = obj.getTitulo();
+    String[] chaves = titulo.split(" ");
+    for(String i : chaves){
+      listaInvertida.delete(i, obj.getID());
+    }
     if (obj != null)
       if (indiceIndiretoISBN.delete(ParIsbnId.hashIsbn(obj.getIsbn()))
           &&
@@ -111,6 +116,18 @@ public class ArquivoLivros extends Arquivo<Livro> {
       if (livroAntigo.getIdCategoria() != novoLivro.getIdCategoria()) {
         relLivrosDaCategoria.delete(new ParIntInt(livroAntigo.getIdCategoria(), livroAntigo.getID()));
         relLivrosDaCategoria.create(new ParIntInt(novoLivro.getIdCategoria(), novoLivro.getID()));
+      }
+      //apaga da lista invertida
+      String titulo = livroAntigo.getTitulo();
+      String[] chaves = titulo.split(" ");
+      for(String i : chaves){
+        listaInvertida.delete(i, novoLivro.getID());
+      }
+      //reescreve na lista invertida
+      titulo = novoLivro.getTitulo();
+      chaves = titulo.split(" ");
+      for(String i : chaves){
+        listaInvertida.create(i, novoLivro.getID());
       }
 
       // Atualiza o livro
