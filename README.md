@@ -19,7 +19,6 @@ No arquivo **ArquivoLivros**:
 6. Por fim no `update` usei a logica do delete depois do create, garantindo que o livro atualizado estará corretamente na lista invertida
 
 **Observações**:
-- A busca na lista invertida é case sensitive, ou seja, procurar por "teste" é diferente de procurar por "Teste".
 - A busca funciona apenas para títulos de livros.
 - A busca está restrita a retornar no máximo 20 livros como resultado.
 - O reaproveitamento de espaços vazios do TP1 não está implementado.
