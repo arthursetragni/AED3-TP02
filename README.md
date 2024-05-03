@@ -20,5 +20,4 @@ No arquivo **ArquivoLivros**:
 
 **Observações**:
 - A busca funciona apenas para títulos de livros.
-- A busca está restrita a retornar no máximo 20 livros como resultado.
 - O reaproveitamento de espaços vazios do TP1 não está implementado.
