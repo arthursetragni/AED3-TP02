@@ -6,6 +6,8 @@ import aeds3.HashExtensivel;
 import aeds3.ParIntInt;
 import entidades.Livro;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.ArrayList;
 
 import aed3.ListaInvertida;
@@ -33,7 +35,8 @@ public class ArquivoLivros extends Arquivo<Livro> {
     int id = super.create(obj);
     obj.setID(id);
     String titulo = obj.getTitulo();
-    String[] chaves = titulo.split(" ");
+    String[] chavesSW = titulo.toLowerCase().split(" ");
+    String[] chaves = retirarSW(chavesSW);
     for(String i : chaves){
       listaInvertida.create(i, obj.getID());
     }
@@ -51,6 +54,7 @@ public class ArquivoLivros extends Arquivo<Livro> {
   }
 
   public Livro[] readTexto(String[] args) throws Exception{
+    args = retirarSW(args);
     int id[], idResultado[];
     idResultado = listaInvertida.read(args[0]);
     //Cria um arrayList para cada vetor de inteiros retornado pela lista invertida
@@ -89,7 +93,8 @@ public class ArquivoLivros extends Arquivo<Livro> {
   public boolean delete(int id) throws Exception {
     Livro obj = super.read(id);
     String titulo = obj.getTitulo();
-    String[] chaves = titulo.split(" ");
+    String[] chaves = retirarSW(titulo.toLowerCase().split(" "));
+
     for(String i : chaves){
       listaInvertida.delete(i, obj.getID());
     }
@@ -119,13 +124,13 @@ public class ArquivoLivros extends Arquivo<Livro> {
       }
       //apaga da lista invertida
       String titulo = livroAntigo.getTitulo();
-      String[] chaves = titulo.split(" ");
+      String[] chaves = retirarSW(titulo.toLowerCase().split(" "));
       for(String i : chaves){
         listaInvertida.delete(i, novoLivro.getID());
       }
       //reescreve na lista invertida
       titulo = novoLivro.getTitulo();
-      chaves = titulo.split(" ");
+      chaves = retirarSW(titulo.toLowerCase().split(" "));
       for(String i : chaves){
         listaInvertida.create(i, novoLivro.getID());
       }
@@ -134,5 +139,36 @@ public class ArquivoLivros extends Arquivo<Livro> {
       return super.update(novoLivro);
     }
     return false;
+  }
+
+  public String [] retirarSW(String [] palavrasChaveSW) throws Exception{
+
+    ArrayList<String> stopWords = new ArrayList<>(); //inicio um arraylist para stopwords
+    ArrayList<String> palavrasChave = new ArrayList<>(); //inicio um arraylist para as palavras chave (titulo)
+
+    //criando um arraylist das stopWords
+    BufferedReader buffRead = new BufferedReader(new FileReader("dados/stopwords.txt")); //abre o arquivo para leitura
+    String sw = "";
+    while ((sw = buffRead.readLine()) != null) //enquanto não ler null
+    {
+      stopWords.add(sw.toLowerCase().trim()); //adiciona ao arraylist (tudo minusculo para padronizar e tirando espaços)
+    }
+    buffRead.close(); //ao terminar fecha o bufferedreader
+
+    //criando um arraylist com o titulo (ainda com stopwords)
+    for(int i = 0; i < palavrasChaveSW.length; i++)
+    {
+      palavrasChave.add(palavrasChaveSW[i]); //adiciona todas as palavras chave ao arraylist
+    }
+    
+    palavrasChave.removeAll(stopWords); //removo as stopwords das palavras chave
+    
+    String[] resposta = new String[palavrasChave.size()]; 
+    
+    for (int j = 0; j < palavrasChave.size(); j++)
+    {
+      resposta[j] = (String) palavrasChave.get(j); //coloca em resposta os valores salvos no arraylist
+    }
+    return resposta; //retorna a resposta
   }
 }

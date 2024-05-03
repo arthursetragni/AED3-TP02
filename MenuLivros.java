@@ -268,11 +268,11 @@ public class MenuLivros {
     System.out.println("\n> Início > Livros > Busca");
     System.out.print("\nPalavras chave: ");
     palavras = console.nextLine();
-    String[] termos = palavras.split(" ");
+    String[] termos = palavras.toLowerCase().split(" ");
     
     try {
       Livro[] l = arqLivros.readTexto(termos);
-      if (l == null) {
+      if (l == null || l.length == 0) {
         System.out.println("Livro não encontrado.");
         return;
       }
