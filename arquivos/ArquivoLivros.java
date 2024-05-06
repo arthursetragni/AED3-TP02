@@ -8,7 +8,9 @@ import entidades.Livro;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.text.Normalizer;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 import aed3.ListaInvertida;
 
@@ -35,7 +37,7 @@ public class ArquivoLivros extends Arquivo<Livro> {
     int id = super.create(obj);
     obj.setID(id);
     String titulo = obj.getTitulo();
-    String[] chavesSW = titulo.toLowerCase().split(" ");
+    String[] chavesSW = semAcento(titulo).toLowerCase().split(" ");
     String[] chaves = retirarSW(chavesSW);
     for(String i : chaves){
       listaInvertida.create(i, obj.getID());
@@ -93,7 +95,7 @@ public class ArquivoLivros extends Arquivo<Livro> {
   public boolean delete(int id) throws Exception {
     Livro obj = super.read(id);
     String titulo = obj.getTitulo();
-    String[] chaves = retirarSW(titulo.toLowerCase().split(" "));
+    String[] chaves = retirarSW(semAcento(titulo).toLowerCase().split(" "));
 
     for(String i : chaves){
       listaInvertida.delete(i, obj.getID());
@@ -127,13 +129,13 @@ public class ArquivoLivros extends Arquivo<Livro> {
       String novoTitulo = novoLivro.getTitulo();
 
       if(!(titulo.equals(novoTitulo))){
-        String[] chaves = retirarSW(titulo.toLowerCase().split(" "));
+        String[] chaves = retirarSW(semAcento(titulo).toLowerCase().split(" "));
         for(String i : chaves){
           listaInvertida.delete(i, novoLivro.getID());
         }
         //reescreve na lista invertida
         
-        chaves = retirarSW(novoTitulo.toLowerCase().split(" "));
+        chaves = retirarSW(semAcento(novoTitulo).toLowerCase().split(" "));
         for(String i : chaves){
           listaInvertida.create(i, novoLivro.getID());
         }
@@ -155,7 +157,7 @@ public class ArquivoLivros extends Arquivo<Livro> {
     String sw = "";
     while ((sw = buffRead.readLine()) != null) //enquanto não ler null
     {
-      stopWords.add(sw.toLowerCase().trim()); //adiciona ao arraylist (tudo minusculo para padronizar e tirando espaços)
+      stopWords.add(semAcento(sw).toLowerCase().trim()); //adiciona ao arraylist (tudo minusculo para padronizar e tirando espaços)
     }
     buffRead.close(); //ao terminar fecha o bufferedreader
 
@@ -175,4 +177,10 @@ public class ArquivoLivros extends Arquivo<Livro> {
     }
     return resposta; //retorna a resposta
   }
+
+  public static String semAcento(String str) {
+    String nfdNormalizedString = Normalizer.normalize(str, Normalizer.Form.NFD);
+    Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+    return pattern.matcher(nfdNormalizedString).replaceAll("");
+ }
 }

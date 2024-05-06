@@ -9,8 +9,10 @@
 // e da saída de dados de livros e das classes relacionadas.
 // -------------------------------------------------------
 
+import java.text.Normalizer;
 import java.text.NumberFormat;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 import arquivos.ArquivoCategorias;
 import arquivos.ArquivoLivros;
@@ -268,7 +270,7 @@ public class MenuLivros {
     System.out.println("\n> Início > Livros > Busca");
     System.out.print("\nPalavras chave: ");
     palavras = console.nextLine();
-    String[] termos = palavras.toLowerCase().split(" ");
+    String[] termos = semAcento(palavras).toLowerCase().split(" ");
     
     try {
       Livro[] l = arqLivros.readTexto(termos);
@@ -369,5 +371,11 @@ public class MenuLivros {
       e.printStackTrace();
     }
   }
+
+  public static String semAcento(String str) {
+        String nfdNormalizedString = Normalizer.normalize(str, Normalizer.Form.NFD);
+        Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+        return pattern.matcher(nfdNormalizedString).replaceAll("");
+    }
 
 }
