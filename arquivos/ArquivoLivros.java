@@ -124,19 +124,23 @@ public class ArquivoLivros extends Arquivo<Livro> {
       }
       //apaga da lista invertida
       String titulo = livroAntigo.getTitulo();
-      String[] chaves = retirarSW(titulo.toLowerCase().split(" "));
-      for(String i : chaves){
-        listaInvertida.delete(i, novoLivro.getID());
-      }
-      //reescreve na lista invertida
-      titulo = novoLivro.getTitulo();
-      chaves = retirarSW(titulo.toLowerCase().split(" "));
-      for(String i : chaves){
-        listaInvertida.create(i, novoLivro.getID());
-      }
+      String novoTitulo = novoLivro.getTitulo();
 
-      // Atualiza o livro
-      return super.update(novoLivro);
+      if(!(titulo.equals(novoTitulo))){
+        String[] chaves = retirarSW(titulo.toLowerCase().split(" "));
+        for(String i : chaves){
+          listaInvertida.delete(i, novoLivro.getID());
+        }
+        //reescreve na lista invertida
+        
+        chaves = retirarSW(novoTitulo.toLowerCase().split(" "));
+        for(String i : chaves){
+          listaInvertida.create(i, novoLivro.getID());
+        }
+
+        // Atualiza o livro
+        return super.update(novoLivro);
+      }
     }
     return false;
   }
