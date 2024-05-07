@@ -22,8 +22,9 @@ No arquivo **ArquivoLivros**:
 - A busca funciona apenas para títulos de livros.
 - O reaproveitamento de espaços vazios do TP1 não está implementado.
 
-**Minha experiência fazendo**: Conseguimos implementar todos os requisitos e todos estão funcionando corretamente. Não tivemos grandes dificuldades em implementar nenhuma operação em particular, a maior dificuldade foi só com o entendimento da classe lista invertida em si. Depois de testa-la um pouco, implementar as operações foi bastante tranquilo.
+**Nossa experiência fazendo**: Conseguimos implementar todos os requisitos e todos estão funcionando corretamente. Não tivemos grandes dificuldades em implementar nenhuma operação em particular, a maior dificuldade foi só com o entendimento da classe lista invertida em si. Depois de testa-la um pouco, implementar as operações foi bastante tranquilo.
 
+**Questionário**
 * A inclusão acrescenta os termos a lista invertida
 
 * A alteração modifica a lista removendo os termos antigos e acrescentando os novos 
