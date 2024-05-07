@@ -21,3 +21,25 @@ No arquivo **ArquivoLivros**:
 **Observações**:
 - A busca funciona apenas para títulos de livros.
 - O reaproveitamento de espaços vazios do TP1 não está implementado.
+
+**Minha experiência fazendo**: Conseguimos implementar todos os requisitos e todos estão funcionando corretamente. Não tivemos grandes dificuldades em implementar nenhuma operação em particular, a maior dificuldade foi só com o entendimento da classe lista invertida em si. Depois de testa-la um pouco, implementar as operações foi bastante tranquilo.
+
+* A inclusão acrescenta os termos a lista invertida
+
+* A alteração modifica a lista removendo os termos antigos e acrescentando os novos 
+
+* A remoção de um livro remove os termos da lista invertida 
+
+* A busca por palavras está implementada e retorna os livros com as palavras pesquisadas no título 
+
+* A busca pode ser feita com mais de uma palavra
+
+* As stop words foram retiradas de todo o processo 
+
+* O que fiz além do que está especificado e colocar as palavras chave na lista invertida com toLowerCase para que letras maiúsculas ou minúsculas não interfiram na pesquisa 
+
+* O trabalho funciona corretamente 
+
+* O trabalho está completo 
+
+* O trabalho não é cópia
